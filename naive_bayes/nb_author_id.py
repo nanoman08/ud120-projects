@@ -26,6 +26,28 @@ features_train, features_test, labels_train, labels_test = preprocess()
 
 #########################################################
 ### your code goes here ###
+from sklearn.naive_bayes import GaussianNB
+
+t0 = time()
+gnb = GaussianNB()
+
+gnb.fit(features_train, labels_train)
+print "gnb training time:", round(time()-t0, 3), "s"
+t0 = time()
+gnb.score(features_test, labels_test)
+
+print "gnb predict time:", round(time()-t0, 3), "s"
+
+t0 = time()
+from sklearn.naive_bayes import MultinomialNB
+
+mnb = MultinomialNB()
+
+mnb.fit(features_train, labels_train)
+
+mnb.score(features_test, labels_test)
+
+print "mnb training time:", round(time()-t0, 3), "s"
 
 
 #########################################################
