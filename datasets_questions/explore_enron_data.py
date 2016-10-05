@@ -18,6 +18,7 @@
 import pickle
 
 enron_data = pickle.load(open("../final_project/final_project_dataset.pkl", "r"))
+enron_data.pop('TOTAL',0)
 i= 0
 j=0
 k=0
@@ -28,7 +29,9 @@ for keys, items in enron_data.iteritems():
         j = j+1
     if items['salary'] != 'NaN':
         k = k+1
-
+    if items['salary'] > 1e6 and items['bonus'] > 5e6:
+        print "name is:", keys, items['salary'], items['bonus']
+        
 print i
     
 for name in enron_data.keys():

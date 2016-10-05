@@ -25,8 +25,19 @@ features_list = ["poi", "salary"]
 data = featureFormat(data_dict, features_list)
 labels, features = targetFeatureSplit(data)
 
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.cross_validation import train_test_split
 
 
+clf = DecisionTreeClassifier()
+clf.fit(features, labels)
+print clf.score(features, labels)
+
+X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.3, random_state=42)
+
+clf_val = DecisionTreeClassifier()
+clf_val.fit(X_train, y_train)
+print clf_val.score(X_test, y_test)
 ### it's all yours from here forward!  
 
 
