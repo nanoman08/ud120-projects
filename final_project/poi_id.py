@@ -2,15 +2,21 @@
 
 import sys
 import pickle
+from pandas import DataFrame
 sys.path.append("../tools/")
 
-from feature_format import featureFormat, targetFeatureSplit
+from feature_format import featureFormat, targetFeatureSplit, email_parser
 from tester import dump_classifier_and_data
 
 ### Task 1: Select what features you'll use.
 ### features_list is a list of strings, each of which is a feature name.
 ### The first feature must be "poi".
-features_list = ['poi','salary'] # You will need to use more features
+features_list = ['poi', 'salary', 'deferral_payments', 'total_payments', \
+'loan_advances', 'bonus', 'restricted_stock_deferred', 'deferred_income', \
+'total_stock_value', 'expenses', 'exercised_stock_options', 'other', \
+'long_term_incentive', 'restricted_stock', 'director_fees', 'to_messages', \
+ 'from_poi_to_this_person', 'from_messages', \
+ 'from_this_person_to_poi', 'shared_receipt_with_poi']  # You will need to use more features
 
 ### Load the dictionary containing the dataset
 with open("final_project_dataset.pkl", "r") as data_file:
@@ -23,7 +29,15 @@ my_dataset = data_dict
 
 ### Extract features and labels from dataset for local testing
 data = featureFormat(my_dataset, features_list, sort_keys = True)
+name_list, emails = email_parser(my_dataset)
+print name_list.pop(90)
+emails.pop(90)
 labels, features = targetFeatureSplit(data)
+
+df = DataFrame(data=features, columns=features_list[1:])
+df['name'] = name_list
+df['email'] = emails
+df['poi'] = labels
 
 ### Task 4: Try a varity of classifiers
 ### Please name your classifier clf for easy export below.

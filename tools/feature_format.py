@@ -99,8 +99,26 @@ def featureFormat( dictionary, features, remove_NaN=True, remove_all_zeroes=True
         ### Append the data point if flagged for addition.
         if append:
             return_list.append( np.array(tmp_list) )
+        else:
+            print 'person with all zero data is:', key
 
     return np.array(return_list)
+
+def email_parser(dictionary):
+    """ convert the email info inside the dictionary into a list    """
+
+
+    return_list = []
+
+    # Key order - first branch is for Python 3 compatibility on mini-projects,
+    # second branch is for compatibility on final project.
+
+    keys = dictionary.keys()
+
+    for key in keys:
+        return_list.append(dictionary[key]['email_address'])
+       
+    return keys, return_list
 
 
 def targetFeatureSplit( data ):
