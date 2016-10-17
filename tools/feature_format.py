@@ -67,6 +67,7 @@ def featureFormat( dictionary, features, remove_NaN=True, remove_all_zeroes=True
             try:
                 dictionary[key][feature]
             except KeyError:
+                print key
                 print "error: key ", feature, " not present"
                 return
             value = dictionary[key][feature]

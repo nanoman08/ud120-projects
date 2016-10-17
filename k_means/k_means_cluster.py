@@ -74,6 +74,30 @@ pred = kmeans.labels_
 ### rename the "name" parameter when you change the number of features
 ### so that the figure gets saved to a different file
 try:
-    Draw(pred, finance_features, poi, mark_poi=False, name="clusters_eso_s_3.pdf", f1_name=feature_1, f2_name=feature_2)
+    Draw(pred, finance_features, poi, mark_poi=False, name="clusters_eso_3.pdf", f1_name=feature_1, f2_name=feature_2)
 except NameError:
     print "no predictions object named pred found, no clusters to plot"
+
+
+from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler()
+scale_finance_features = scaler.fit_transform(finance_features)
+
+for f1, f2, _ in scale_finance_features:
+    plt.scatter( f1, f2 )
+plt.show()
+
+### cluster here; create predictions of the cluster labels
+### for the data and store them to a list called pred
+kmeans2 = KMeans(n_clusters=3, random_state=36).fit(scale_finance_features)
+
+pred2 = kmeans2.labels_
+
+### rename the "name" parameter when you change the number of features
+### so that the figure gets saved to a different file
+try:
+    Draw(pred2, scale_finance_features, poi, mark_poi=False, name="clusters_eso_s_3.pdf", f1_name=feature_1, f2_name=feature_2)
+except NameError:
+    print "no predictions object named pred found, no clusters to plot"
+  

@@ -33,11 +33,23 @@ clf = DecisionTreeClassifier()
 clf.fit(features, labels)
 print clf.score(features, labels)
 
-X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.3, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.8, random_state=42)
+
 
 clf_val = DecisionTreeClassifier()
 clf_val.fit(X_train, y_train)
 print clf_val.score(X_test, y_test)
 ### it's all yours from here forward!  
 
+from sklearn.cross_validation import StratifiedShuffleSplit
+sss = StratifiedShuffleSplit(labels, 3, test_size=0.3, random_state=36)
 
+features = np.array(features)
+labels = np.array(labels)
+for train_index, test_index in sss:
+    train_index = train_index
+    X_train, X_test = features[train_index], features[test_index]
+    y_train, y_test = labels[train_index], labels[test_index]
+    clf_val = DecisionTreeClassifier()
+    clf_val.fit(X_train, y_train)
+    print "stratified split test:", clf_val.score(X_test, y_test)
